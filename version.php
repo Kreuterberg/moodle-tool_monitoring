@@ -34,5 +34,5 @@ defined('MOODLE_INTERNAL') || die();
 $plugin->component = 'tool_monitoring';
 $plugin->release = '0.3.0';
 $plugin->version = 2026050700;
-$plugin->requires = 2025041400; // Moodle 5.0.
+$plugin->requires = 2024100710; // Moodle 4.5+ (upstream requires 5.0, lowered for compatibility).
 $plugin->maturity = MATURITY_ALPHA;

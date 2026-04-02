@@ -27,7 +27,7 @@
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace monitoringexporter_prometheus\route\controller;
+namespace monitoringexporter_prometheus\route\api;
 
 use core\exception\coding_exception;
 use core\param;
@@ -128,6 +128,11 @@ class prometheus {
         } catch (coding_exception | dml_exception) {
             return $makeresponse('Error in Prometheus exporter', 500);
         }
-        return $makeresponse($text);
+        // Moodle 4.5 compat: core\router\middleware\cors_middleware rewrites the
+        // Content-Type to application/json in the PSR-15 pipeline after the handler
+        // returns. Bypass via header()+echo+exit so Prometheus receives text/plain.
+        header('Content-Type: text/plain; charset=utf-8');
+        echo $text;
+        exit;
     }
 }
